@@ -1,0 +1,3 @@
+Download Link of the preprocessed data: 
+Dataset: http://www.dbs.ifi.lmu.de/~frey/MLSS18/the_simpsons_char_dataset/dataset.h5
+Labels: http://www.dbs.ifi.lmu.de/~frey/MLSS18/the_simpsons_char_dataset/labels.h5
