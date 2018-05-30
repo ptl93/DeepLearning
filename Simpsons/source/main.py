@@ -41,7 +41,7 @@ def main():
     params = Hyperparams()
     
     # load preprocessed data
-    (X_train, y_train), (X_test, y_test) = load_data()
+    X_train, y_train, X_test, y_test = load_data()
     
     # init CNN object
     model = simpsons_CNN()

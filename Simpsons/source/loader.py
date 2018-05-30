@@ -12,6 +12,7 @@ Furthermore the datasets will be preprocessed by scaling into range (0,1) in ord
 from os.path import dirname
 import numpy as np
 import h5py
+#from keras.utils import np_utils
 
 #Define location of datasets
 dataset_path = f"{dirname(__file__)}/../data/dataset.h5"
@@ -58,4 +59,4 @@ def load_data():
     
     print("Validation-Train Ratio:", X_test.shape[0]/X_train.shape[0])
     
-    return X_train, X_test, y_train, y_test
+    return X_train, y_train, X_test, y_test
