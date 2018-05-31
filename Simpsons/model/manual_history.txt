@@ -1,0 +1,4 @@
+Train Loss: 0.07268
+Tran Acc: 0.97611
+Validation Loss: 0.26458
+Validation Acc: 0.93312
