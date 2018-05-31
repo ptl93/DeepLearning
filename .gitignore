@@ -1,5 +1,8 @@
 *.csv
 
+## Model weights too much with 8mio. params. datasize is ~101mb. 
+/Simpsons/model/intermediate.h5
+
 *dataset.h5
 *labels.h5
 

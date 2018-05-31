@@ -21,6 +21,7 @@ class Hyperparams:
         self.architecture = "../model/architecture.json"
         self.inter_model = "../model/intermediate.h5"
         self.submission  = "../data/submission.csv"
+        self.history = "../model/history.json"
         # training params
         self.batch_size = 128
         self.epochs = 50
@@ -100,8 +101,8 @@ def main():
         json.dump(model.to_json(), fp)
     # saving history
     if params.pretrain == False:
-        history_json = json.dumps(history.history, indent = 4, separators=(',', ': '))
-        writeToJSONFile("./model", "evalHistory", history_json)
+        with open(params.history, "w") as jp:
+            json.dump(history.history, indent = 4, separators=(',', ': '), jp)
     
 # run main program when calling main.py programm in shell
 if __name__ == '__main__':
