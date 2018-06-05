@@ -1,0 +1,5 @@
+Go to http://ufldl.stanford.edu/housenumbers/ and download every .mat file from format2
+--> train_32x32.mat
+--> test_32x32.mat
+--> extra_32x32.mat
+
