@@ -34,7 +34,7 @@ def main():
     params = Hyperparams()
     
     # load preprocessed data
-    train_processed, test_processed, extra = load_data()
+    train_processed, test_processed = load_data(load_extra_data = False)
     X_train = train_processed[0]
     y_train = train_processed[1]
     
