@@ -57,17 +57,21 @@ def load_data(load_extra_data = False):
         X = np.concatenate((X_train, X_test), axis = 3)
         #scale into range (0,1)
         X = X / np.max(X)
+        #swap '4th' dimension into '1st' for observations
+        X = np.swapaxes(X, axis1 = 0, axis2 = 3)
+        X = np.swapaxes(X, axis1 = 1, axis2 = 3)
+        X = np.swapaxes(X, axis1 = 2, axis2 = 3)
         y = np.concatenate((y_train, y_test), axis = 0)
         y = np_utils.to_categorical(y)
         del X_train, X_test
         del y_train, y_test
-        n_obs = X.shape[3]
+        n_obs = X.shape[0]
         test_size = ceil(n_obs * 0.15)
         test_idx = np.random.choice(n_obs, size = test_size, replace = False)
         train_idx = np.setdiff1d(np.arange(n_obs), test_idx, assume_unique = True)
-        X_train = X[:,:,:,train_idx]
+        X_train = X[train_idx,:,:,:]
         y_train = y[train_idx,:]
-        X_test = X[:,:,:,test_idx]
+        X_test = X[test_idx,:,:,:]
         y_test = y[test_idx,:]
         del X, y
         
@@ -92,16 +96,20 @@ def load_data(load_extra_data = False):
         del y_train, y_test, y_extra
         y = np_utils.to_categorical(y)
         
-        n_obs = X.shape[3]
+        #swap '4th' dimension into '1st' for observations
+        X = np.swapaxes(X, axis1 = 0, axis2 = 3)
+        X = np.swapaxes(X, axis1 = 1, axis2 = 3)
+        X = np.swapaxes(X, axis1 = 2, axis2 = 3)
+        n_obs = X.shape[0]
         test_size = ceil(n_obs * 0.15)
         test_idx = np.random.choice(n_obs, size = test_size, replace = False)
         train_idx = np.setdiff1d(np.arange(n_obs), test_idx, assume_unique = True)
         # scale into range (0,1)
         X = X / np.max(X) 
         ## the division by 255 is problematic. always crashes!
-        X_train = X[:,:,:,train_idx]
+        X_train = X[train_idx,:,:,:]
         y_train = y[train_idx,:]
-        X_test = X[:,:,:,test_idx]
+        X_test = X[test_idx:,:,:]
         y_test = y[test_idx,:]
         del X, y
         

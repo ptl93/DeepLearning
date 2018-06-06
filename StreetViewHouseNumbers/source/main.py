@@ -99,7 +99,7 @@ def main():
     # saving history
     if params.pretrain == False:
         with open(params.history, "w") as jp:
-            json.dump(history.history, indent = 4, separators=(',', ': '), jp)
+            json.dump(history.history, indent = 4, separators=(',', ': '), fp = jp)
     
 # run main program when calling main.py programm in shell
 if __name__ == '__main__':
