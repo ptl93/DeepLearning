@@ -11,11 +11,15 @@ The repository-folder are structured by 'problem-set' name, every problem-set co
 ```
 ├── README.md
 ├── MNIST
-├── FASHION-MNIST
+├── Fashion-MNIST
 │   ├── data
 │   ├── model
 │   └── source
-├── SIMPSONS
+├── Simpsons
+│   ├── data
+│   ├── model
+│   └── source
+├── StreetViewHouseNumbers
 │   ├── data
 │   ├── model
 │   └── source
