@@ -2,7 +2,7 @@
 This repository contains the implementation of deep learning models.
 
 ## Environment
-Python 3.6: keras, tensorflow (backend), numpy, matplotlib, pandas, h5py
+- Keras2 + TensorFlow (backend) + Scikit-Learn + Numpy + Pandas + h5py + matplotlib ...
 
 ## Structure
 
@@ -25,9 +25,15 @@ The repository-folder are structured by 'problem-set' name, every problem-set co
 │   └── source
 ```
 
-## Environment
+### Benchmarks
 
-- Keras2 + TensorFlow (backend) + Scikit-Learn + Numpy + Pandas + h5py + matplotlib ...
+|         Dataset         | Test Accuracy |             Test/Train Info              			|
+| :---------------------: | :-----------: | :--------------------------------------: 			|
+|          MNIST          |      97,18%   |      10.000/60.0000 samples ratio, 20 epochs        |
+|      Fashion-MNIST      |      96,04%   |  	 10.000/50.0000 samples ratio, 50 epochs 		|
+| 		 Simpsons		  |      93,31%   |      2527/14317		samples ratio, 50 epochs		|
+|  StreetViewHouseNumbers |      86,38%   | 	 14894/84395	samples ratio, 50 epochs	 	|
+
 
 
 ### Running
