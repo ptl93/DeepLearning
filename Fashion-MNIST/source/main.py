@@ -7,7 +7,7 @@ Main python programm for classifying Fasion-MNIST dataset
 """
 from loader import load_data
 from model import fashion_CNN
-
+import json
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 from keras.losses import categorical_crossentropy
@@ -22,20 +22,13 @@ class Hyperparams:
         self.architecture = "../model/architecture.json"
         self.inter_model = "../model/intermediate.h5"
         self.submission  = "../data/submission.csv"
+        self.history = "../model/history.json"
         # training params
         self.batch_size = 128
         self.epochs = 50
         self.input_shape = (28, 28, 1)
         self.classes = 10
 
-# JSON file saver
-import json
-def writeToJSONFile(path, fileName, data):
-    filePathNameWExt = "./" + path + "/" + fileName + ".json"
-    with open(filePathNameWExt, 'w') as fp:
-        json.dump(data, fp)
-        
-        
 # python main programm function
 def main():
     # init Hyperparams object
@@ -96,11 +89,13 @@ def main():
     print("Train       Acc: ",  train_results[1])
     print("Validation  Loss:",  val_results[0])
     print("Validation  Acc: ",  val_results[1])
-    
+    # saving archicteture:
+    with open(params.architecture, 'w') as fp:
+        json.dump(model.to_json(), fp)
     # saving history
     if params.pretrain == False:
-        history_json = json.dumps(history.history, indent = 4, separators=(',', ': '))
-        writeToJSONFile("./model", "evalHistory", history_json)
+        with open(params.history, "w") as jp:
+            json.dump(history.history, indent = 4, separators=(',', ': '), fp = jp)
     # saving prediction
     y_pred = model.predict(X_submission)
     y_pred = np.argmax(y_pred, axis = 1)
