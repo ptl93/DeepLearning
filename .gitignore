@@ -9,6 +9,9 @@
 ## SVHN-data
 *mat
 
+## Cifar-10
+*cifar-10-python.tar.gz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
