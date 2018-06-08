@@ -69,12 +69,12 @@ def load_data():
     ## Untar the archived files
     untar(data_dir)
     ## Define new path where unzipped files lie
-    data_dir = data_dir + "cifar-10-batches-py"
+    data_dir_f = data_dir + "cifar-10-batches-py"
     ## Define training batches:
     training_batches = ["data_batch_" + str(i) for i in range(1, 6)]
     ## Load all training batches directly and concatenate
     for i in range(0, 5):
-        batch_full_path = data_dir + "/" + training_batches[i]
+        batch_full_path = data_dir_f + "/" + training_batches[i]
         tmp = unpickle(batch_full_path)
         if i == 0: #Init 
             X_train = cifar_10_reshape(tmp[list(tmp.keys())[2]])
@@ -84,7 +84,7 @@ def load_data():
             y_train = np.concatenate((y_train, tmp[list(tmp.keys())[1]]))
 
     ## Load test batch
-    batch_full_path_test = data_dir + "/test_batch"
+    batch_full_path_test = data_dir_f + "/test_batch"
     tmp = unpickle(batch_full_path_test)
     X_test = cifar_10_reshape(tmp[list(tmp.keys())[2]])
     y_test = np.array(tmp[list(tmp.keys())[1]])
@@ -115,7 +115,7 @@ def load_data():
     y_test = np_utils.to_categorical(y_test, num_classes = len(np.unique(y_test)))
     
     train_processed = (X_train, y_train)
-    test_processed = (X_test, y_train)
+    test_processed = (X_test, y_test)
     
     #write train and test info into ../model/info.txt 
     info_file = open(info_dir, "w")

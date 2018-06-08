@@ -77,9 +77,7 @@ def main():
             samplewise_center = False,
             featurewise_std_normalization = False,
             samplewise_std_normalization = False,
-            zca_whitening = False,
-            horizontal_flip = True,
-            vertical_flip = False
+            zca_whitening = False
         ).flow(X_train, y_train, batch_size = params.batch_size)
         ## Compile model with 3 search phases adapting learning rate for rmsprop algorithm
         
@@ -91,7 +89,7 @@ def main():
         )
         history1 = model.fit_generator(
             generator_train,
-            steps_per_epoch=x_train.shape[0] // params.batch_size,
+            steps_per_epoch=X_train.shape[0] // params.batch_size,
             epochs=params.epochs,
             validation_data=(X_test, y_test)
         )
@@ -105,7 +103,7 @@ def main():
         )
         history2 = model.fit_generator(
             generator_train,
-            steps_per_epoch=x_train.shape[0] // params.batch_size,
+            steps_per_epoch=X_train.shape[0] // params.batch_size,
             epochs=params.epochs,
             validation_data=(X_test, y_test)
         )
@@ -119,7 +117,7 @@ def main():
         )
         history3 = model.fit_generator(
             generator_train,
-            steps_per_epoch=x_train.shape[0] // params.batch_size,
+            steps_per_epoch=X_train.shape[0] // params.batch_size,
             epochs=params.epochs,
             validation_data=(X_test, y_test)
         )
