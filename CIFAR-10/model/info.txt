@@ -1,2 +1,0 @@
-Training info shape: (50000, 64, 64, 3)
-Test info shape: (10000, 64, 64, 3)

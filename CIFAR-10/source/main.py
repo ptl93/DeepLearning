@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 # define hyperparameter class (object)
 class Hyperparams:
     def __init__(self):
-        self.pretrain = True #True 
+        self.pretrain = False #True 
         self.fullset = True
         self.architecture = "../model/architecture.json"
         self.inter_model = [
