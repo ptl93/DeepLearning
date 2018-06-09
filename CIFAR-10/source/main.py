@@ -6,7 +6,7 @@ http://www.cs.utoronto.ca/~kriz/cifar.html
 @email: tuanle@hotmail.de
 """
 from loader import load_data
-from model import cifar10_CNN
+from model import cifar10_CNN, cifar10_CNN_VGG_modified
 
 from keras.preprocessing.image import ImageDataGenerator
 from keras.losses import categorical_crossentropy
@@ -19,22 +19,22 @@ import matplotlib.pyplot as plt
 # define hyperparameter class (object)
 class Hyperparams:
     def __init__(self):
-        self.pretrain = False #True 
+        self.pretrain = True #True 
         self.fullset = True
         self.architecture = "../model/architecture.json"
         self.inter_model = [
-            "../model/intermediate_ep20.h5",
-            "../model/intermediate_ep40.h5",
-            "../model/intermediate_ep60.h5"
+            "../model/intermediate_ep60.h5",
+            "../model/intermediate_ep90.h5",
+            "../model/intermediate_ep120.h5"
         ]
         self.history = [
-                "../model/history_epoch20.json",
-                "../model/history_epoch40.json",
-                "../model/history_epoch60.json"
+                "../model/history_epoch60.json",
+                "../model/history_epoch90.json",
+                "../model/history_epoch120.json"
         ]
         # training params
         self.batch_size = 128
-        self.epochs = 20
+        self.epochs = 30
         self.input_shape = (64, 64, 3)
         self.classes = 10
 
@@ -52,20 +52,11 @@ def main():
     y_test = test_processed[1]
 
     # init CNN object
-    model = cifar10_CNN()
+    model = cifar10_CNN_VGG_modified()
     # print model summary to console
     print(model.summary())
-    # if trained weights already exist
-    if params.pretrain:
-        model.load_weights(params.inter_model)
-        model.compile(
-            loss = categorical_crossentropy,
-            optimizer = adam(lr = 1e-3, decay = 1e-4),
-            metrics = ["accuracy"]
-        )
-    # train CNN from start
-    else:
-        generator_train = ImageDataGenerator(
+    # Data augmentation
+    generator_train = ImageDataGenerator(
             rotation_range = 15,
             width_shift_range = 0.08,
             height_shift_range = 0.08,
@@ -79,6 +70,25 @@ def main():
             samplewise_std_normalization = False,
             zca_whitening = False
         ).flow(X_train, y_train, batch_size = params.batch_size)
+    
+    # if trained weights already exist
+    if params.pretrain:
+        # search phase 3, bc network crashed during second phase
+        model.load_weights(params.inter_model[1])
+        model.compile(
+                loss=categorical_crossentropy,
+                optimizer=rmsprop(lr=0.0003,decay=1e-6),
+                metrics=['accuracy']
+        )
+        model.fit_generator(
+            generator_train,
+            steps_per_epoch=X_train.shape[0] // params.batch_size,
+            epochs=params.epochs,
+            validation_data=(X_test, y_test)
+        )
+        model.save_weights(params.inter_model[2])
+    # train CNN from start
+    else:
         ## Compile model with 3 search phases adapting learning rate for rmsprop algorithm
         
         # search phase 1
@@ -90,7 +100,7 @@ def main():
         history1 = model.fit_generator(
             generator_train,
             steps_per_epoch=X_train.shape[0] // params.batch_size,
-            epochs=params.epochs,
+            epochs=2*params.epochs,
             validation_data=(X_test, y_test)
         )
         model.save_weights(params.inter_model[0])
